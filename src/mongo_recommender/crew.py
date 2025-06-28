@@ -112,7 +112,6 @@ class Mongo_Reccomender:
         # llm = LLM(
         #     model="groq/llama-3.1-70b-versatile",
         # )
-        # llm = ChatGroq(model="llama-3.1-70b-versatile",api_key="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")
         return Crew(
             agents=worker_agents,
             tasks=self.tasks,
