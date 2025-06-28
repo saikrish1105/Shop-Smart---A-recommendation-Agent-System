@@ -1,0 +1,84 @@
+supervisor_task:
+  description: >
+    The user's name is: {user_name}.
+
+    Your job is to orchestrate the agents and tasks under your control. First:
+    - Use the chat_support_agent to respond to the user's message: "{user_message}". Thus making sure the user feels heard and understood.
+    - Assign the mongo_agent to retrieve and compile the user's entire profile from multiple collections.
+    - Then, assign the recommendation_agent to analyze that profile and suggest personalized products.
+
+    Finally, compile all of their results into a clean, readable markdown report. The report must include:
+    - User Summary
+    - Purchase & Feedback Overview
+    - Personalized Product Recommendations
+
+  expected_output: >
+    A markdown-formatted final report containing:
+    1. User overview
+    2. Combined purchase & feedback summary
+    3. Top 3 product recommendations with links and justifications
+  agent: supervisor
+
+
+mongo_task:
+  description: >
+    Given the user's name: {user_name}, find their userId from the `userInfo` collection.
+    If the user's name is not found, return an error message indicating that the user does not exist.
+    Do not perform any other actions if the user does not exist.
+
+    Then use `userId` to collect all records from:
+    - `userPurchaseHistory`
+    - `userFeedback`
+    - `orderDetails`
+    - `productInfo`
+
+
+    Use the `productId`s found to cross-reference entries in `productInfo`.
+
+    Output a structured and readable report of the user's:
+    - Basic info
+    - Purchase summary
+    - Feedback (including poor ratings or comments)
+    - Products ordered
+
+  expected_output: >
+    A markdown summary of all data found for the user. Include userId, product names,
+    comments, ratings, and purchase behavior.
+  markdown: true
+  agent: mongo_agent
+
+recommendation_task:
+  description: >
+    Read the user's purchase and feedback summary. Based on:
+    - Products they purchased
+    - Feedback where they rated poorly or left bad comments
+
+    Use your tool to search for 3 better alternatives.
+
+    For example, if they bought a bad headphone, find a better headphone or a related item.
+    If they disliked a guitar, suggest a keyboard.
+
+  expected_output: >
+    A list of 3 personalized product suggestions. Each should include:
+    - Product name
+    - Why it’s better
+    - Link to where they can find it online
+  markdown: true
+  agent: recommendation_agent
+
+chat_support_task:
+  description: >
+    Respond to the user's message: "{user_message}"
+
+    Your job is to:
+    - Just make a conversation with them
+    - Clarify any confusion they have
+    - Answer questions politely and informatively
+    - Provide general support and encouragement
+    - Offer help with how the system works or what to try next
+
+    You do not access databases or external tools. Be helpful and conversational.
+
+  expected_output: >
+    A friendly, helpful paragraph (or two) that answers the user's message in a calm and supportive way.
+  agent: chat_support_agent

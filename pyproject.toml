@@ -1,0 +1,23 @@
+[project]
+name = "agents_structure"
+version = "0.1.0"
+description = "Agents_Structure using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=0.130.0,<1.0.0"
+]
+
+[project.scripts]
+agents_structure = "agents_structure.main:run"
+run_crew = "agents_structure.main:run"
+train = "agents_structure.main:train"
+replay = "agents_structure.main:replay"
+test = "agents_structure.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
