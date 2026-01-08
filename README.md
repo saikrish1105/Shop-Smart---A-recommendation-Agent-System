@@ -1,8 +1,4 @@
-Here’s your polished and professional `README.md` for your CrewAI project:
-
----
-
-# 🧠 Personalized AI Crew with MongoDB + Recommendations
+# Multi Agent Recommendation System for E-commerce Websites
 
 This project is a **CrewAI-powered multi-agent system** that:
 
